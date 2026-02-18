@@ -15,8 +15,10 @@ import {
   Calendar,
   ArrowRight,
   X,
-  Image as ImageIcon
+  Image as ImageIcon,
+  FileDown
 } from "lucide-react";
+import { generateReport } from "@/utils/generateReport";
 import { Link } from "react-router-dom";
 
 interface DetectionResult {
@@ -244,6 +246,18 @@ export default function Detect() {
                     </div>
                     <h2 className="text-2xl font-display font-bold">{result.disease}</h2>
                   </div>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    onClick={() => generateReport({
+                      ...result,
+                      date: new Date().toLocaleDateString(),
+                      patientEmail: user?.email || undefined,
+                    })}
+                  >
+                    <FileDown className="mr-2 h-4 w-4" />
+                    Download Report
+                  </Button>
                 </div>
 
                 <p className="text-muted-foreground mb-6">{result.description}</p>
